@@ -1,6 +1,6 @@
 using System;
 var stopwatch = new Stopwatch();
-var lines = File.ReadAllLines("1.txt").ToList();
+var lines = File.ReadAllLines("input1.txt").ToList();
 stopwatch.Start();
 var ints = lines.ConvertAll(int.Parse).ToList();
 var sums = Enumerable.Range(0, ints.Count-2)
