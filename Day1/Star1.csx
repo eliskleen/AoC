@@ -1,6 +1,6 @@
 using System;
 
-var lines = File.ReadAllLines("1.txt");
+var lines = File.ReadAllLines("input1.txt");
 var inc = Enumerable.Range(1, lines.Length-1)
                     .Select(i => int.Parse(lines[i-1]) < int.Parse(lines[i]))
                     .ToList()
