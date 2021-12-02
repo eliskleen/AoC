@@ -1,6 +1,6 @@
 var lines = File.ReadAllLines("input1.txt").ToList();
-var depth = lines.FindAll(s => s.Contains("up") || s.Contains("down")).ToList();
-var forward = lines.FindAll(s => s.Contains("forward")).ToList();
+var depth = lines.FindAll(s => s.Contains("up") || s.Contains("down"));
+var forward = lines.FindAll(s => s.Contains("forward"));
 var neg = depth.FindAll(s => s.Contains("u"))
                .Select(s => int.Parse(s.Split(' ').Last()))
                .Sum();
