@@ -16,6 +16,8 @@ List<int> findRating(List<List<int>> list, int criteria)
     return list.First(); 
 }
 var lines = File.ReadAllLines("input.txt").ToList();
+var wathc = new Stopwatch();
+wathc.Start();
 var binary = lines.Select(s => s        
                 .Select(ss => int.Parse(ss.ToString()))
                 .ToList())
@@ -32,4 +34,6 @@ var gamma = Convert.ToInt32(
                     string.Join("", 
                     resOxy.Select(s => s.ToString()))
                     ,2);
+wathc.Stop();
+Console.WriteLine(wathc.ElapsedMilliseconds);
 Console.WriteLine(gamma*epsilon);
