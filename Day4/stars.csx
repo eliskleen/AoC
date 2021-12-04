@@ -92,6 +92,8 @@ void star2(List<Board> boards, List<int> nums)
 }
 
 var lines = File.ReadAllLines("input.txt").ToList();
+var watch = new Stopwatch();
+watch.Start();
 var nums = lines[0].Split(',')
                    .ToList()
                    .ConvertAll(int.Parse);
@@ -120,6 +122,5 @@ foreach (var b in numBoards)
     boards.Add(new Board(b, 5));   
 star1(boards, nums);
 star2(boards, nums);
-
-
-
+watch.Stop();
+Console.WriteLine("Time: "+ watch.ElapsedMilliseconds); //mellan 25-45 ms
