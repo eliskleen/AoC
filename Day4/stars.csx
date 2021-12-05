@@ -1,3 +1,4 @@
+
 class Board
 {
     int size;
@@ -29,6 +30,7 @@ class Board
                //check if a row is marked
                if(board[i*size+j].marked == false)
                     row = false;
+               //check if col is marked
                if(board[j*size+i].marked == false)
                     col = false; 
            }
