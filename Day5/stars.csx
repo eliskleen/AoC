@@ -1,3 +1,23 @@
+void main()
+{
+    var fileLines = File.ReadAllLines("input1.txt").ToList();
+    var watch = new Stopwatch();
+    watch.Start();
+    var lines = new List<List<int>>();
+    foreach (var line in fileLines)
+        lines.Add(getNums(line));
+    var max = lines.SelectMany(x => x).Max();
+    var board = new List<List<int>>();
+    for(int i = 0; i<= max; i++)
+        board.Add(new int[max+1].ToList());
+    star1(lines, board);
+    board = new List<List<int>>();
+    for(int i = 0; i<= max; i++)
+        board.Add(new int[max+1].ToList());
+    star2(lines, board);
+    watch.Stop();
+    Console.WriteLine("Time: " + watch.ElapsedMilliseconds);
+}
 void traverseLine(List<int> line, List<List<int>> board)
 {
     var signx = line[2] > line[0] ? 1 : -1;
@@ -5,7 +25,7 @@ void traverseLine(List<int> line, List<List<int>> board)
     var diffx = (line[2] - line[0])*signx;
     var diffy = (line[3] - line[1])*signy;
 
-    var points = new List<(int, int)>();
+    //diagonal line
     if(diffx == diffy)
         for(int i = 0; i <= diffx; i++)
             board[line[0]+(i*signx)][line[1]+(i*signy)]++;
@@ -56,16 +76,4 @@ List<int> getNums(string str)
     ret.Add(split[2]);
     return ret.ConvertAll(int.Parse);
 }
-var fileLines = File.ReadAllLines("input1.txt").ToList();
-var lines = new List<List<int>>();
-foreach (var line in fileLines)
-    lines.Add(getNums(line));
-var max = lines.SelectMany(x => x).Max();
-var board = new List<List<int>>();
-for(int i = 0; i<= max; i++)
-    board.Add(new int[max+1].ToList());
-star1(lines, board);
-board = new List<List<int>>();
-for(int i = 0; i<= max; i++)
-    board.Add(new int[max+1].ToList());
-star2(lines, board);
+main();
