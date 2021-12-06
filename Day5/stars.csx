@@ -12,7 +12,7 @@ void main()
         board.Add(new int[max+1].ToList());
     star1(lines, board);
     board = new List<List<int>>();
-    for(int i = 0; i<= max; i++)
+    for(int i = 0; i <= max; i++)
         board.Add(new int[max+1].ToList());
     star2(lines, board);
     watch.Stop();
