@@ -54,5 +54,5 @@ long sum = 0;
 var times = 30;
 for(int i = 0; i< times; i++)
     sum += main();
-//this gives avarage = 0ms and about 15000 ticks
+//this gives avarage = 0ms and about 16000 ticks
 Console.WriteLine("Avarage of "+times+ " runs: "+sum/times);
