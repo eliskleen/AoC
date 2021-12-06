@@ -48,9 +48,6 @@ int star1(List<int> fish, int days)
         }
     }
     Console.WriteLine(fish.Count); 
-    var fa = new int[9];
-    foreach (var f in fish)
-       fa[f]++;
     return fish.Count;
 }
 long sum = 0;
