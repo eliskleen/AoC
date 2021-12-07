@@ -15,8 +15,7 @@ int weridSum(int a, int b)
     var sum = 0;
     var max = Math.Abs(a-b);
     var min = 1; 
-    sum = (max+min)*(max/2);
-    sum += max % 2;
+    sum = ((max+min)*max)/2;
     return sum;
 }
 int dist(int a, int b)
@@ -42,7 +41,7 @@ void stars(List<int> crabPos, Func<int, int, int> calc)
     Console.WriteLine("Cost: "+cost+" Pos: "+move);
 }
 long sum = 0;
-var times = 30;
+var times = 1;
 for(int i = 0; i< times; i++)
     sum += main();
 Console.WriteLine("Avarage of "+times+ " runs: "+sum/times);
