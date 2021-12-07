@@ -3,11 +3,12 @@ long main()
     var watch = new Stopwatch();
     watch.Start();
     var crabPos = File.ReadAllText("input.txt").Split(',').ToList().ConvertAll(int.Parse);
-    stars(crabPos, dist);// ~70 ms on avarage to run
-    stars(crabPos, weridSum); // ~80 ms on avarage to run
+    stars(crabPos, dist);// ~18 ms on avarage to run
+    stars(crabPos, weridSum); // ~28 ms on avarage to run
     watch.Stop();
     Console.WriteLine("Time: "+watch.ElapsedMilliseconds+" ms");
     return watch.ElapsedMilliseconds;
+
 }
 int weridSum(int a, int b)
 {
@@ -29,6 +30,9 @@ void stars(List<int> crabPos, Func<int, int, int> calc)
     for(int i = crabPos.Min(); i <=crabPos.Max(); i++)
     {
         var nCost = crabPos.Select(c => calc(c, i)).Sum();
+        //if the cost increases we know the lats one was the best
+        if(nCost > cost && cost != -1)
+            break;
         if(cost == -1 || nCost < cost)
         {
             cost = nCost;
@@ -38,7 +42,7 @@ void stars(List<int> crabPos, Func<int, int, int> calc)
     Console.WriteLine("Cost: "+cost+" Pos: "+move);
 }
 long sum = 0;
-var times = 1;
+var times = 30;
 for(int i = 0; i< times; i++)
     sum += main();
 Console.WriteLine("Avarage of "+times+ " runs: "+sum/times);
