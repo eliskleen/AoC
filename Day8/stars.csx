@@ -70,6 +70,8 @@ int calcNum(string code)
     var b = ls.Count(s => s == '2');
     var c = ls.Count(s => s == '3');
     var d = ls.Count(s => s == '4');
+    if(a == 2 && d == 2)
+        return 0;
     if(d == 2 && b == 1)
         return 2;
     if(a == 2 && b == 1)
