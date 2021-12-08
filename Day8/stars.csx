@@ -6,13 +6,12 @@ long main()
     var lines = File.ReadAllLines("input.txt").ToList();
     watch.Start();
    
-    star1(segCodes, lines);
-    //star2(segCodes2.ToList(), lines);
-    star2Improved(lines);
+    star1(segCodes, lines); //~0,48 ms on avarage when run many times in a row, 5 when ran once
+    //star2(segCodes.ToList(), lines); //3,15, 16 when ran once
+    star2Improved(lines); //~on avarage 2,57ms to run when run many times in a row but around 10 when ran once
     watch.Stop();
-    Console.WriteLine(watch.ElapsedMilliseconds);
+    Console.WriteLine(watch.ElapsedMilliseconds); //~on avarage 3 ms to solve both when run many times in a row, 15-20 on first run
     return watch.ElapsedMilliseconds;
-    
 }
 void star1(string [] segCodes, List<string> lines)
 {
@@ -158,7 +157,8 @@ void addReplacer(string segCode, List<(char, char)> replacers, List<string> inpu
 }
 
 long sum = 0;
-var times = 300;
+var times = 1;
 for(int i = 0; i< times; i++)
     sum += main();
-Console.WriteLine("Avarage of "+times+ " runs: "+sum/times);
+Console.WriteLine("Avarage of "+times+ " runs: "+(float)sum/(float)times);
+Console.WriteLine(sum);
