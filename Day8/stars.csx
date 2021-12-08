@@ -1,16 +1,17 @@
-void main()
+ var segCodes = new string[10] {"abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg",
+                                  "acf", "abcdefg", "abcdfg"};
+long main()
 {
     var watch = new Stopwatch();
-    watch.Start();
     var lines = File.ReadAllLines("input.txt").ToList();
-    var segCodes = new string[10] {"abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg",
-                                  "acf", "abcdefg", "abcdfg"};
-    var segCodes2 = new string[10] {"cagedb", "ab", "gcdfa", "fbcad", "eafb", "cdfbe", "cdfgeb",
-                                  "dab", "acedgfb", "cefabd"}; 
+    watch.Start();
+   
     star1(segCodes, lines);
-    star2(segCodes2.ToList(), lines);
+    //star2(segCodes2.ToList(), lines);
+    star2Improved(lines);
     watch.Stop();
     Console.WriteLine(watch.ElapsedMilliseconds);
+    return watch.ElapsedMilliseconds;
     
 }
 void star1(string [] segCodes, List<string> lines)
@@ -25,6 +26,57 @@ void star1(string [] segCodes, List<string> lines)
         sum += result.Count;
     }
     Console.WriteLine(sum);
+}
+void star2Improved(List<string> lines)
+{
+    var sum = 0;
+    segCodes.ToList().ForEach(s => s = String.Concat(s.OrderBy(c => c))); 
+     foreach (var line in lines)
+    {
+        var input = line.Split('|')[0].Split(' ').ToList()
+                        .Where(s => s.Length == 2 
+                                 || s.Length == 3
+                                 || s.Length == 4
+                                 || s.Length == 7).ToList();
+        var result = line.Split('|')[1].Split(' ').ToList();
+        result.Remove("");
+        var numbers = result.Select(r => calcNum2(r, input)).ToList();
+        numbers.Reverse();
+        //count coudes:
+        for (int i = 0; i < result.Count; i++)
+            sum += numbers[i]*(int)Math.Pow(10, i);   
+    }
+    Console.WriteLine(sum);
+}
+
+int calcNum2(string code, List<string> input)
+{
+    var len = code.Length;
+    if(len == 2)
+        return 1;
+    if(len == 3)
+        return 7;
+    if(len == 4)
+        return 4;
+    if(len == 7)
+        return 8;
+    var ls = code.ToList(); 
+    var a = ls.RemoveAll(s => Convert.ToBoolean(input.FirstOrDefault(s => s.Length == 2).Contains(s)));
+    var b = ls.RemoveAll(s => Convert.ToBoolean(input.FirstOrDefault(s => s.Length == 4).Contains(s)));
+    var c = ls.RemoveAll(s => Convert.ToBoolean(input.FirstOrDefault(s => s.Length == 3).Contains(s)));
+    var d = ls.RemoveAll(s => Convert.ToBoolean(input.FirstOrDefault(s => s.Length == 7)?.Contains(s)));
+     if(a == 2 && d == 2)
+        return 0;
+    if(d == 2 && b == 1)
+        return 2;
+    if(a == 2 && b == 1)
+        return 3;
+    if(a == 1 && b == 2 && d == 1)
+        return 5; 
+    if(a == 1)
+        return 6;
+    return 9; 
+
 }
 void star2(List<string> segCodes, List<string> lines)
 {
@@ -104,4 +156,9 @@ void addReplacer(string segCode, List<(char, char)> replacers, List<string> inpu
     foreach (var c in current)
         replacers.Add((c, rep));
 }
-main();
+
+long sum = 0;
+var times = 300;
+for(int i = 0; i< times; i++)
+    sum += main();
+Console.WriteLine("Avarage of "+times+ " runs: "+sum/times);
