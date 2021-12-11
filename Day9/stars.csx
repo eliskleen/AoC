@@ -4,11 +4,11 @@ long main()
     watch.Start();
     var vals = File.ReadAllLines("input.txt").Select(s => s.Select(c => (int.Parse(c.ToString()))).ToList()).ToList();
     var lowPoints = getImprovedLows(vals);
-    //var lowPoints = getLowPoints(vals);
+    //var lowPoints = g netLowPoints(vals);
     var one = star1(vals, lowPoints);
     var two = star2(vals, lowPoints);
     watch.Stop();
-    Console.WriteLine(one + " " + two);
+   // Console.WriteLine(one + " " + two);
     return watch.ElapsedMilliseconds;
     //~20 ms first run, when ran 300 times in a row it avarages about 5 ms
 }
@@ -20,13 +20,11 @@ int star2(List<List<int>> vals, List<(int, int, int)> lowPoints = null)
     var basins = new List<int>();
     foreach (var point in lowPoints)
         basins.Add(countBasinSize(map, point.Item2, point.Item3));
-    
+
     basins.Sort();
     basins.Reverse();
-    basins.RemoveRange(3, basins.Count-3);
     var sum = 1;
-    basins.ForEach(b => sum *= b);
-    //Console.WriteLine(sum);
+    basins.GetRange(0, 3).ForEach(b => sum *= b);
     return sum;
 }
 int countBasinSize(List<List<(int, bool)>> vals, int x, int y)
@@ -85,8 +83,7 @@ List<(int, int, int)> getImprovedLows(List<List<int>> vals)
             y++;
         }
     }
-    return lowPoints;
-        
+    return lowPoints;       
 }
 List<(int, int, int)> getLowPoints(List<List<int>> vals)
 {
@@ -124,7 +121,7 @@ List<(int, int, int)> getLowPoints(List<List<int>> vals)
     return (smallest, i, j);
 }
 long sum = 0;
-var times = 1;
+var times = 300;
 for(int i = 0; i< times; i++)
     sum += main();
 Console.WriteLine("Avarage of "+times+ " runs: "+(float)sum/(float)times);
