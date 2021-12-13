@@ -45,49 +45,30 @@ int [,] foldx(int [,] paper, int foldX)
 }
 int [,] star1(int [,] paper, (string, int) fold)
 {
-    var xMax = paper.GetLength(0);
-    var yMax = paper.GetLength(1);
-    var ret = new int [0, 0];
     if(fold.Item1.Equals("x"))
-    {
-        ret = new int [fold.Item2, yMax];
-        ret = foldx(paper, fold.Item2);
-    }
-    else
-    {
-        ret = new int [xMax, fold.Item2];
-        ret = foldy(paper, fold.Item2);
-    }
-    return ret;
+        return foldx(paper, fold.Item2);
+    
+    return foldy(paper, fold.Item2);
 }
-void star2(int [,] paper, List<(string, int)> folds)
+void star2(int [,] paper, List<(string, int)> folds, bool print = false)
 {
-    var ret = new int [0, 0];
-    var old = paper;
+    
     foreach (var f in folds)
     {
-        var xMax = old.GetLength(0);
-        var yMax = old.GetLength(1);
         if(f.Item1.Equals("x"))
-        {
-            ret = new int [xMax-f.Item2, yMax];
-            ret = foldx(old, f.Item2);
-        }
+            paper = foldx(paper, f.Item2);
         else
-        {
-            ret = new int [xMax, yMax-f.Item2];
-            ret = foldy(old, f.Item2);
-        }
-        old = new int[ret.GetLength(0), ret.GetLength(1)];
-        old = ret.Clone() as int[,];
+            paper = foldy(paper, f.Item2);
     }
     //här ska old se ut som den "ska"
     // NU SKA VI BARA GÖRA OM DEN TILL BOKSTÄVER???
-    for (int x = 0; x < old.GetLength(1); x++)
+    if(!print)
+        return;
+    for (int x = 0; x < paper.GetLength(1); x++)
     {
-        for (int y = 0; y < old.GetLength(0); y++)
+        for (int y = 0; y < paper.GetLength(0); y++)
         {
-            Console.Write(old[y, x] > 0 ? "#" : ".");
+            Console.Write(paper[y, x] > 0 ? "#" : " ");
         }
         Console.WriteLine("");
     }
@@ -122,7 +103,7 @@ long main()
     foreach (var c in coords)
         paper[c.Item1, c.Item2] = 1;
     var folded = star1(paper, folds[0]);
-    Console.WriteLine(folded.Cast<int>().ToList().Count(s => s > 0));
+    //Console.WriteLine(folded.Cast<int>().ToList().Count(s => s > 0));
     star2(paper, folds);
     watch.Stop();
     return watch.ElapsedMilliseconds;
@@ -131,5 +112,5 @@ long sum = 0;
 var times = 10;
 for(int i = 0; i< times; i++)
     sum += main();
-Console.WriteLine("Avarage of "+times+ " runs: "+(float)sum/(float)times);
+Console.WriteLine("Avarage of "+ times+ " runs: "+(float)sum/(float)times);
 Console.WriteLine(sum);
