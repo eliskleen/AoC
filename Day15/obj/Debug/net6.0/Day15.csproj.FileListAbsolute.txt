@@ -1,0 +1,15 @@
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\Day15.exe
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\Day15.deps.json
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\Day15.runtimeconfig.json
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\Day15.dll
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\ref\Day15.dll
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\bin\Debug\net6.0\Day15.pdb
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.csproj.AssemblyReference.cache
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.GeneratedMSBuildEditorConfig.editorconfig
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.AssemblyInfoInputs.cache
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.AssemblyInfo.cs
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.csproj.CoreCompileInputs.cache
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.dll
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\ref\Day15.dll
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.pdb
+C:\Chalmers\RoligaProjekt\AOC2021\Min\Day15\obj\Debug\net6.0\Day15.genruntimeconfig.cache

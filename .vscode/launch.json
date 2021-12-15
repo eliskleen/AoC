@@ -1,6 +1,17 @@
 {
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": ".NET Core Launch (console)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/bin/Debug/net6.0/Day15.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "console": "internalConsole"
+    },
         {
             "name": ".NET Script Debug",
             "type": "coreclr",

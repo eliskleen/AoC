@@ -113,7 +113,6 @@ class CaveSystem
              var smalls = current.Item1.Where(t => t.to.small).Select(t => t.to).ToList();
             foreach (var outgoing in current.Item2.getOutgoingTunnles())
             {
-               
                 if(outgoing.to.small)
                     smalls.Add(outgoing.to);
                 var dups = smalls.GroupBy(c => c.name).Where(c => c.Count() >= maxInSmall).ToList().Count;
@@ -129,36 +128,10 @@ class CaveSystem
                 arr[current.Item1.Length] = outgoing;
                 if(!stack.Contains((arr, outgoing.to)))
                     stack.Add((arr, outgoing.to));
-                    
             }
         }
         return paths;
     }
-    bool contains(List<List<Tunnle>> paths, List<Tunnle> path)
-    {
-    if(paths.Count == 0)
-        return false; 
-    if(paths.All(p => p.Count != path.Count))
-        {
-            var pp = paths.Where(l => l.Count >= path.Count)
-                          .Select(r => r.GetRange(0, path.Count)).ToList();
-            return contains(pp, path); 
-        }
-    foreach (var p in paths)
-    {
-        if(p.Count != path.Count)
-            continue;
-        var s = true;
-        for (int i = 0; i < p.Count; i++)
-        {
-            if(!p[i].Equals(path[i]))
-                s = false;       
-        }
-        if(s)
-            return true;
-    }
-    return false;
-}
 }
 int star1(CaveSystem sys, Cave start, Cave end, bool print)
 {
@@ -186,7 +159,7 @@ int star2(CaveSystem sys, Cave start, Cave end, bool print)
 }
 long main()
 {
-    var lines = File.ReadAllLines("input.txt").ToList();
+    var lines = File.ReadAllLines("test.txt").ToList();
     var sys = new CaveSystem(lines);
     var start = sys.caves.Find(c => c.name == "start");
     var end = sys.caves.Find(c => c.name == "end");

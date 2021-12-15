@@ -29,12 +29,11 @@ int [,] foldx(int [,] paper, int foldX)
     {
         for (int y = 0; y < yMax; y++)
         {
-            
             if(x == foldX)
                 continue;
             if(x > foldX)
             {   
-                var xDiff = x-foldX;    
+                var xDiff = x-foldX; 
                 ret[foldX-xDiff, y] += paper[x, y];
             } 
             else
@@ -50,9 +49,8 @@ int [,] star1(int [,] paper, (string, int) fold)
     
     return foldy(paper, fold.Item2);
 }
-void star2(int [,] paper, List<(string, int)> folds, bool print = false)
+void star2(int [,] paper, List<(string, int)> folds, bool print = true)
 {
-    
     foreach (var f in folds)
     {
         if(f.Item1.Equals("x"))
@@ -60,8 +58,7 @@ void star2(int [,] paper, List<(string, int)> folds, bool print = false)
         else
             paper = foldy(paper, f.Item2);
     }
-    //här ska old se ut som den "ska"
-    // NU SKA VI BARA GÖRA OM DEN TILL BOKSTÄVER???
+
     if(!print)
         return;
     for (int x = 0; x < paper.GetLength(1); x++)
@@ -109,7 +106,7 @@ long main()
     return watch.ElapsedMilliseconds;
 }
 long sum = 0;
-var times = 10;
+var times = 1;
 for(int i = 0; i< times; i++)
     sum += main();
 Console.WriteLine("Avarage of "+ times+ " runs: "+(float)sum/(float)times);
