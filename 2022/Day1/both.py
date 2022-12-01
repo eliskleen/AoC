@@ -10,5 +10,7 @@ for line in lines:
     elif line != "\n\n":
         currCal += int(line)
 calList = sorted(calList, reverse=True)
-s = sum(calList[:3])
-print(s)
+s1 = calList[0]
+s2 = sum(calList[:3])
+print("Part 1: ", s1)
+print("Part 2: ", s2)

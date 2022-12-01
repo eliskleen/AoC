@@ -8,7 +8,7 @@ for line in lines:
     if line == "\n":
         calList.append(currCal)
         currCal = 0
-    else:
+    elif line != "\n\n":
         currCal += int(line)
 
 
