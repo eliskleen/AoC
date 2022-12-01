@@ -1,2 +1,2 @@
 # AOC
-##Look at my shitty solutions if u like :)
+## Look at my shitty solutions if u like :)
