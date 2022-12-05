@@ -47,11 +47,6 @@ def get_data(path):
             moves.append((int(l[1]), int(l[3]), int(l[5])))
         return dict.copy(), moves
 
-
-            
-            
-    
-
 def star1(data):
     d, moves = data
     dict = {}
