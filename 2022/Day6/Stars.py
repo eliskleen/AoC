@@ -45,8 +45,6 @@ def star2(data):
             return i+14
 
 
-    return 0
-
 def main():
     import cProfile
     import pstats
