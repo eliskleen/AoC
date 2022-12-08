@@ -10,7 +10,7 @@ def day_():
 
     time1 = time.perf_counter()
 
-    (ans1,ans2) = star1(data)
+    (ans1,ans2) = stars(data)
     time2 = time.perf_counter()
 
     # ans2 = star2(data)
@@ -31,7 +31,7 @@ def get_data(path):
 totSpace = 70000000
 unUsedNeeded = 30000000
 
-def star1(data):
+def stars(data):
     dirSize = collections.Counter()
     currDirrs = []
     possibleDirs = collections.defaultdict()
