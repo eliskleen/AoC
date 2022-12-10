@@ -54,7 +54,6 @@ class CPU:
             c -= 20
             t = 40
         if c % t == 0:
-            print(f"cycle: {cycle}, x: {x}, ss: {ss}, x*cycle: {x*cycle}")
             return ss + x*cycle
         return ss
 
