@@ -9,21 +9,17 @@ def day_():
 
     time1 = time.perf_counter()
 
-    ans1 = star1(data)
+    (ans1, ans2) = stars(data)
     time2 = time.perf_counter()
 
-    ans2 = star2(data)
-    time3 = time.perf_counter()
 
     load_time = time1 - start_time
     star1_time = time2 - time1
-    star2_time = time3 - time2
     if 1:
         print(f'Load time: {load_time}')
-        print(f'Star 1 time: {star1_time}')
-        print(f'Star 2 time: {star2_time}')
+        print(f'Star 1 and 2 time: {star1_time}')
         print(f'Star 1 answer: {ans1}')
-        print(f'Star 2 answer: {ans2}')
+        print(f'Star 2 answer: \n{ans2}')
 
 def get_data(path):
     with open(path) as f:
@@ -38,7 +34,7 @@ class CPU:
         self.ss = 0
         self.printStr = ""
         self.drawCTR(self.x, self.cycle)
-        
+
     def noop(self):
         self.cycle += 1
         self.ss = self.checkCycle(self.x, self.ss, self.cycle)
@@ -63,31 +59,23 @@ class CPU:
         return ss
 
     def drawCTR(self, x, cycle):
-        print(f"cycle: {cycle}, x: {x}")
-        
         c = cycle % 40
         if abs (x+1-c) < 2:
             self.printStr += "#"
         else:
             self.printStr += "."
-        print(self.printStr)
         if cycle % 40 == 0:
             self.printStr += "\n"
             return
 
-def star1(data):
+def stars(data):
     cpu = CPU()
     for (inst, val) in data:
         if inst == "addx":
             cpu.addx(val) 
         elif inst == "noop":
             cpu.noop()
-
-    print(cpu.printStr)
-    return cpu.ss
-
-def star2(data):
-    return 0
+    return (cpu.ss, cpu.printStr)
 
 def main():
     import cProfile
