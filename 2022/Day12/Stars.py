@@ -83,10 +83,6 @@ def distToGoal(node, end):
     y = pos[1] - end.position[1]
     return math.sqrt(abs(x)**2 + abs(y)**2)
 
-def my_sort(kv):
-    # print(f"kv: {kv}")
-    return kv[1].f
-
 def astar(maze, start, end):
     start_node = start
     start_node.g = start_node.f = 0
@@ -115,7 +111,7 @@ def astar(maze, start, end):
             if new_pos == end.position:
                 return Maze_Node(q, new_pos, end)
             open_list[new_pos] = node
-            merge(*[(my_sort(kv), kv) for kv in open_list.items()])
+            merge(*[(kv[1].f, kv) for kv in open_list.items()])
         closed_list[q.position] = q
 
 def star1(data):
