@@ -77,54 +77,7 @@ def star1(data):
             map[(x-i, depth)] = "#"
 
     return len([v for (k,v) in map.items() if v == "#" and k[1] == depth])
-    # return count
-
-        # for cx in range(xMin, xMax+1):
-        #     dx = abs(cx - x)
-        #     yMin = y - (d-dx)
-        #     yMax = y + (d-dx)
-        #     if yMin > depth or yMax < depth:
-        #         continue
-        #     for cy in range(yMin, yMax+1):
-        #         print(f"({cx}, {cy})")
-        #         if cy == depth and (cx, cy) != b:
-        #             print("#")
-        #             map[(cx, cy)] = "#"
-
-    # ps = ""
-    # for y in range(10, 11):
-    #     ps += "\n" + str(y) + " "
-    #     if(len(str(y)) < 2):
-    #         ps += " "
-    #     for x in range(-4, 26):
-    #         ps += map[(x,y)]
-    # print(ps)
-
-    # return len([v for (k,v) in map.items() if v == "#" and k[1] == depth])
-
-
-                    
-
-
-
-
-        
-        
-    
-    return 0
-
 def star2(data):
-    return 0
-    size = 4000000
-    for i in range(0, size+1):
-        if i % 100_000 == 0:
-            print(f"i: {i}")
-        if countOnDepth(i, data) < size:
-            for x in range(0, size+1):
-                if (x, i) not in data:
-                    return x*size + i
-    
-    print("Star 2")
     max = 20
     max = 4000000
     dists = collections.defaultdict(lambda : 0)
