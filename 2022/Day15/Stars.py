@@ -53,7 +53,6 @@ def getRanges(s, b):
 
 
 def star1(data):
-    return 0
     map = collections.defaultdict(lambda : '.')
     depth = 2000000
     # depth = 10
@@ -115,6 +114,16 @@ def star1(data):
     return 0
 
 def star2(data):
+    return 0
+    size = 4000000
+    for i in range(0, size+1):
+        if i % 100_000 == 0:
+            print(f"i: {i}")
+        if countOnDepth(i, data) < size:
+            for x in range(0, size+1):
+                if (x, i) not in data:
+                    return x*size + i
+    
     print("Star 2")
     max = 20
     max = 4000000
