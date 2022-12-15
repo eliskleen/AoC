@@ -48,7 +48,7 @@ def get_data(path):
                     for j in range(start, end+1):
                         map[(j, coords[i][1])] = '#'
                         maxY = max(maxY, int(coords[i][1]))
-        print(map)
+        # print(map)
         return (map, maxY)
     
 class Cave:
@@ -110,7 +110,6 @@ def star1(data):
     return len(cave.map) - walls
 
 def star2(data):
-    print("Star 2")
     cave = Cave((data[0], data[1]+2))
     cave.dropSand2()
     sand = len([k for k, v in cave.map.items() if v == 'o'])
