@@ -6,7 +6,6 @@ fn main() {
     part_2(input);
 
 
-
 }
 fn part_1(input : Vec<Vec<i32>>) {
     let max_elf : i32 = input.iter().map(|c| c.iter().sum()).max().unwrap();
