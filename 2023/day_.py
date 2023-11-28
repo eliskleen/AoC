@@ -20,9 +20,10 @@ def day_():
     raw_data = puzzle.input_data
     if example:
         print("Using example")
-        #use 'aocd 2022 1 --example' to get the example data
+        #use 'aocd year day --example' to get the example data
         with open('example.txt', 'r') as f:
             raw_data = f.read()
+
             
     start_time = time.perf_counter()
     data = format_data(raw_data)
