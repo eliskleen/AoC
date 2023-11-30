@@ -75,5 +75,6 @@ def main():
     day = int(__file__.split('\\')[-1].split('_')[1].split('.')[0]) 
     stats.dump_stats(filename = f'profiling\\profiling{day}.prof')
 
+# run with `py day_n.py -- a b` to submit both stars for day n
 if __name__ == '__main__':
     main()
