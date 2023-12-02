@@ -58,29 +58,66 @@ def day_():
 def format_data(raw):
 
     return raw.split('\n')
-    
-def star1(data):
+
+def star1_original(data):
     ret = 0
     for line in data:
         nums = [int(x) for x in line if x.isdigit()]
         ret += nums[0]*10 + nums[-1]
     return ret
 
-def star2(data):
+def star2_original(data):
     ret = 0
     for line in data:
         i = 0
         nums = []
         while i < len(line):
-            for word in fromWord:
+            for word in fromWord2:
                 if line[i:].startswith(word):
-                    nums.append(fromWord[word])
+                    nums.append(fromWord2[word])
                     break
             i += 1
         ret += nums[0]*10 + nums[-1]
     return ret
 
-fromWord = {
+
+def star1(data):
+    return twoPointer(data, fromWord1)
+
+def star2(data):
+    return twoPointer(data, fromWord2)
+
+def twoPointer(data, fromWord):
+    ret = 0
+    for line in data:
+        revLine = line[::-1]
+        num1, num2 = -1, -1
+        i = 0
+        while i < len(line):
+            for word in fromWord:
+                if num1 == -1 and line[i:].startswith(word):
+                    num1 = fromWord[word]
+                if num2 == -1 and revLine[i:].startswith(word[::-1]):
+                    num2 = fromWord[word]
+            if num1 != -1 and num2 != -1:
+                break
+            i += 1
+        ret += num1*10 + num2
+    return ret
+
+
+fromWord1 = {
+    '1':1 , 
+    '2':2 , 
+    '3':3 , 
+    '4':4 , 
+    '5':5 , 
+    '6':6 , 
+    '7':7 , 
+    '8':8 , 
+    '9':9
+}
+fromWord2 = {
     '1' : 1,
     '2' : 2,
     '3' : 3,
