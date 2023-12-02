@@ -3,7 +3,8 @@ import sys
 import time
 from aocd import submit
 from aocd.models import Puzzle
-
+import itertools
+import functools
 
 def day_():
     year = int(os.getcwd().split('\\')[-1][:4]) 
