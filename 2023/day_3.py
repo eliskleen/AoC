@@ -108,21 +108,14 @@ def star2(data):
     for y0, line in enumerate(lines):
         for x0, c in enumerate(line):
             if c == '*':
-                valid = False
-                n1, n2  = None, None
+                nums = set()
                 for (dx, dy) in directions:
                     x = x0 + dx
                     y = y0 + dy
                     if (x, y) in dict:
-                        if n1 is None:
-                            n1 = dict[(x, y)]
-                        elif n1 != dict[(x, y)]:
-                            n2 = dict[(x, y)]
-                            valid = True
-                        if valid and (n1 != dict[(x, y)] and n2 != dict[(x, y)]):
-                            valid = False
-                if valid:
-                    ret += n1[0] * n2[0]
+                        nums.add(dict[(x, y)])
+                if len(nums) == 2:
+                    ret += nums.pop()[0] * nums.pop()[0]
     return ret
 
 def main():
