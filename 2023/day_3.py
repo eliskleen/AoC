@@ -104,28 +104,25 @@ def star2(data):
             x = x0 + i
             y = y0
             dict[(x, y)] = (num, x0, y0)
-    print(dict)
     ret = 0
     for y0, line in enumerate(lines):
         for x0, c in enumerate(line):
             if c == '*':
                 valid = False
-                print(f'found * at {x}, {y}')
-                (n1, x1, y1) = (None, None, None)
-                (n2, x2, y2) = (None, None, None) 
+                n1, n2  = None, None
                 for (dx, dy) in directions:
                     x = x0 + dx
                     y = y0 + dy
                     if (x, y) in dict:
                         if n1 is None:
-                            (n1, x1, y1) = dict[(x, y)]
-                        elif (n1,x1,y1) != dict[(x, y)]:
-                            (n2, x2,y2) = dict[(x, y)]
+                            n1 = dict[(x, y)]
+                        elif n1 != dict[(x, y)]:
+                            n2 = dict[(x, y)]
                             valid = True
-                        if n1 is not None and n2 is not None and ((n1,x1,y1) != dict[(x, y)] and (n2,x2,y2) != dict[(x, y)]):
+                        if valid and (n1 != dict[(x, y)] and n2 != dict[(x, y)]):
                             valid = False
                 if valid:
-                    ret += n1 * n2
+                    ret += n1[0] * n2[0]
     return ret
 
 def main():
