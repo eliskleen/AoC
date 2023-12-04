@@ -96,7 +96,6 @@ def star2(data):
         winningsOnCards.append(winningNums)
 
     instances = [1 for x in range(len(winningsOnCards))]
-    print(instances)
     for i, v in enumerate(winningsOnCards):
         for j in range(v):
             instances[j+ i +1] += instances[i]
