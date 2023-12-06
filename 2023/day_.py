@@ -7,7 +7,7 @@ import itertools
 import functools
 
 def day_():
-    year = int(os.getcwd().split('\\')[-1][:-4:]) 
+    year = int(os.getcwd().split('\\')[-1][-4:]) 
     day = int(__file__.split('\\')[-1].split('_')[1].split('.')[0])
     puzzle = Puzzle(year=year, day=day) 
     submit_a = "a" in sys.argv
