@@ -60,10 +60,10 @@ def format_data(raw):
     dists = [int(x) for x in raw.split('\n')[1].split(':')[1].split()]
     times2 = int(raw.split('\n')[0].split(':')[1].replace(" ", ""))
     dist2 = int(raw.split('\n')[1].split(':')[1].replace(" ", "")) 
-    return (times, dists, times2, dist2)
+    return [(times, dists), ([times2], [dist2])]
     
 def star1(td):
-    (times, dists, t2, d2) = td
+    (times, dists) = td[0]
     wins = 1
     for i in range(len(times)):
         ws = 0
@@ -75,8 +75,7 @@ def star1(td):
         wins *= ws
     return wins
 def star2(td):
-    (t1, d1, time, dist) = td
-    return star1(([time], [dist], time, dist))
+    return star1([td[1]])
 
 def main():
     import cProfile
