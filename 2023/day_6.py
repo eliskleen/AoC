@@ -58,12 +58,10 @@ def day_():
 def format_data(raw):
     times = [int(x) for x in raw.split('\n')[0].split(':')[1].split()]
     dists = [int(x) for x in raw.split('\n')[1].split(':')[1].split()]
-    times2 = int(raw.split('\n')[0].split(':')[1].replace(" ", ""))
-    dist2 = int(raw.split('\n')[1].split(':')[1].replace(" ", "")) 
-    return [(times, dists), ([times2], [dist2])]
+    return (times, dists)
     
 def star1(td):
-    (times, dists) = td[0]
+    (times, dists) = td
     wins = 1
     for i in range(len(times)):
         ws = 0
@@ -74,8 +72,11 @@ def star1(td):
                 ws += 1
         wins *= ws
     return wins
+
 def star2(td):
-    return star1([td[1]])
+    time = int("".join(map(str, td[0])))
+    dist = int("".join(map(str, td[1])))
+    return star1(([time], [dist]))
 
 def main():
     import cProfile
