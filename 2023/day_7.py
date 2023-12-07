@@ -130,27 +130,6 @@ def createBestHand(hand):
     return maxHand 
 
 
-def compareHands2(h1, h2):
-    valueH1 = getHandType(h1)
-    valueH2 = getHandType(h2)
-    if valueH1 == valueH2:
-        for i in range(5):
-            c1 = getCardType2(str(h1[2])[i])
-            c2 = getCardType2(str(h2[2])[i])
-            if c1 < c2:
-                return -1
-            if c1 > c2:
-                return 1
-        return 1
-    else:
-        if valueH1 < valueH2:
-            return -1
-        else:
-            return 1
-
-def getCardType2(c):
-    cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'J': -1, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
-    return cardTypes[c]
 def star2(data):
     global cardTypes
     cardTypes['J'] = -1
