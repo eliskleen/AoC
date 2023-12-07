@@ -133,11 +133,7 @@ def createBestHand(hand):
 def star2(data):
     global cardTypes
     cardTypes['J'] = -1
-    new_data = []
-    for hand in data:
-        handType = createBestHand(hand)[0]
-        new_data.append((handType, hand[1], hand[2]))
-    
+    new_data = map(createBestHand, data)
     return star1(new_data)
 
 def main():
