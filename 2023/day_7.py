@@ -79,30 +79,12 @@ def getHandType(hand):
         return 0
 
 
-
 cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'J': 9, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
 def getCardType(c):
     return cardTypes[c]
 
-def compareHands(h1, h2):
-    if h1[0] == h2[0]:
-        for i in range(5):
-            c1 = getCardType(str(h1[1])[i])
-            c2 = getCardType(str(h2[1])[i])
-            if c1 < c2:
-                return -1
-            if c1 > c2:
-                return 1
-        return 1
-    else:
-        if h1[0] < h2[0]:
-            return -1
-        else:
-            return 1
-
 def star1(hb):
-    cmp_key = cmp_to_key(compareHands)
-    sorted_hands = list((sorted(hb, key=cmp_key)))
+    sorted_hands = list((sorted(hb, key=lambda x : (x[0], list(map(getCardType, x[1]))))))
     ret = 0
     for i in range(len(sorted_hands)):
         ret += (i+1) * sorted_hands[i][2]
