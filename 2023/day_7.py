@@ -133,8 +133,7 @@ def createBestHand(hand):
 def star2(data):
     global cardTypes
     cardTypes['J'] = -1
-    new_data = map(createBestHand, data)
-    return star1(new_data)
+    return star1(map(createBestHand, data))
 
 def main():
     import cProfile
