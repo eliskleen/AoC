@@ -78,23 +78,18 @@ def getHandType(hand):
     else: #high card
         return 0
 
-
 cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'J': 9, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
 def getCardType(c):
     return cardTypes[c]
 
 def star1(hb):
     sorted_hands = list((sorted(hb, key=lambda x : (x[0], list(map(getCardType, x[1]))))))
-    ret = 0
-    for i in range(len(sorted_hands)):
-        ret += (i+1) * sorted_hands[i][2]
-    return ret
+    return sum([x[2]*(i+1) for i, x in enumerate(sorted_hands)])
 
 def createBestHand(hand):
     cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
     if not 'J' in hand[1]:
         return hand
-
     jokers = hand[1].count('J')
     jokerIndexes = [i for i, x in enumerate(hand[1]) if x == 'J']
     perms = list(itertools.product(cardTypes.keys(), repeat=jokers))
@@ -108,9 +103,7 @@ def createBestHand(hand):
         if val > maxHandValue:
             maxHandValue = val
             maxHand = (val, hand[1], hand[2])
-
     return maxHand 
-
 
 def star2(data):
     global cardTypes
