@@ -129,21 +129,6 @@ def createBestHand(hand):
 
     return maxHand 
 
-    jokers = hand[0].count('J')
-    jokerIndexes = [i for i, x in enumerate(hand[0]) if x == 'J']
-    perms = list(itertools.product(cardTypes.keys(), repeat=jokers))
-    maxHandValue = 0
-    maxHand = (hand[0], hand[1], hand[0])
-    for perm in perms:
-        newHand = list(hand[0])
-        for i in range(jokers):
-            newHand[jokerIndexes[i]] = perm[i]
-        val = getHandType((newHand, hand[1], hand[1]))
-        if val > maxHandValue:
-            maxHandValue = val
-            maxHand = (newHand, hand[1], hand[0])
-
-    return maxHand 
 
 def compareHands2(h1, h2):
     valueH1 = getHandType(h1)
@@ -172,7 +157,6 @@ def star2(data):
     new_data = []
     for hand in data:
         handType = createBestHand(hand)[0]
-        # print("hand:", hand, "best:", createBestHand(hand), "type:", handType)
         new_data.append((handType, hand[1], hand[2]))
     
     return star1(new_data)
@@ -185,7 +169,6 @@ def main():
     
     stats = pstats.Stats(pr)
     stats.sort_stats(pstats.SortKey.TIME)
-    # stats.print_stats()
     day = int(__file__.split('\\')[-1].split('_')[1].split('.')[0]) 
     stats.dump_stats(filename = f'profiling\\profiling{day}.prof')
 
