@@ -55,14 +55,12 @@ def day_():
         print(f'Star 2 answer: {ans2}')
 
 
+
 def format_data(raw):
-    return [(x.split()[0], int(x.split()[1])) for x in raw.split('\n')]
+    return [(getHandType(x.split()[0]), x.split()[0], int(x.split()[1])) for x in raw.split('\n')]
     
-def getHandType(h):
-    hand = h[0]
+def getHandType(hand):
     s = set(hand)
-    # print(hand)
-    # print(s)
     if len(s) == 1:
         return 6 #five of a kind
     elif len(s) == 2: #could be four of a kind or full house
@@ -81,69 +79,66 @@ def getHandType(h):
         return 0
 
 
-#247794632
 
+cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'J': 9, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
 def getCardType(c):
-    cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0, 'J': -1 if star == 2 else 9}
     return cardTypes[c]
 
 def compareHands(h1, h2):
-    valueH1 = createBestHand(h1) if star == 2 else getHandType(h1)
-    valueH2 = createBestHand(h2) if star == 2 else getHandType(h2)
-    if valueH1 == valueH2:
+    if h1[0] == h2[0]:
         for i in range(5):
-            c1 = getCardType(str(h1[0])[i])
-            c2 = getCardType(str(h2[0])[i])
+            c1 = getCardType(str(h1[1])[i])
+            c2 = getCardType(str(h2[1])[i])
             if c1 < c2:
                 return -1
             if c1 > c2:
                 return 1
         return 1
     else:
-        if valueH1 < valueH2:
+        if h1[0] < h2[0]:
             return -1
         else:
             return 1
-def createBestHand(hand):
-    cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0, 'J': -1}
-    if not 'J' in hand[0]:
-        return getHandType(hand)
 
-    jokers = hand[0].count('J')
-    jokerIndexes = [i for i, x in enumerate(hand[0]) if x == 'J']
-    perms = list(itertools.product(cardTypes.keys(), repeat=jokers))
-    # print(perms)
-    maxHand = 0
-    for perm in perms:
-        newHand = list(hand[0])
-        for i in range(jokers):
-            newHand[jokerIndexes[i]] = perm[i]
-        maxHand = max(maxHand, getHandType((newHand, hand[1])))
-    return maxHand 
-
-
-global star
 def star1(hb):
-    global star
-    star = 1
     cmp_key = cmp_to_key(compareHands)
     sorted_hands = list((sorted(hb, key=cmp_key)))
     ret = 0
     for i in range(len(sorted_hands)):
-        ret += (i+1) * sorted_hands[i][1]
+        ret += (i+1) * sorted_hands[i][2]
     return ret
 
+def createBestHand(hand):
+    cardTypes = {'A': 12, 'K': 11, 'Q': 10, 'T': 8, '9': 7, '8': 6, '7': 5, '6': 4, '5': 3, '4': 2, '3': 1, '2': 0}
+    if not 'J' in hand[1]:
+        return hand
+
+    jokers = hand[1].count('J')
+    jokerIndexes = [i for i, x in enumerate(hand[1]) if x == 'J']
+    perms = list(itertools.product(cardTypes.keys(), repeat=jokers))
+    maxHandValue = 0
+    maxHand = hand
+    for perm in perms:
+        newHand = list(hand[1])
+        for i in range(jokers):
+            newHand[jokerIndexes[i]] = perm[i]
+        val = getHandType((newHand))
+        if val > maxHandValue:
+            maxHandValue = val
+            maxHand = (val, hand[1], hand[2])
+
+    return maxHand 
 
 def star2(data):
-    global star
-    star = 2
-    cmp_key = cmp_to_key(compareHands)
-    sorted_hands = list((sorted(data, key=cmp_key)))
-    ret = 0
-    for i in range(len(sorted_hands)):
-        ret += (i+1) * sorted_hands[i][1]
-    return ret
-
+    global cardTypes
+    cardTypes['J'] = -1
+    new_data = []
+    for hand in data:
+        handType = createBestHand(hand)[0]
+        # print("hand:", hand, "best:", createBestHand(hand), "type:", handType)
+        new_data.append((handType, hand[1], hand[2]))
+    
+    return star1(new_data)
 
 def main():
     import cProfile
