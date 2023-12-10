@@ -231,57 +231,7 @@ def star2(data):
         else:
             g.inside = False
     return contained
-
-    #leqavng this here... it passes all the tests but is wrong somehow
-    corners = ['L', 'J', '7', 'F']
-    cornerX = {'L' : '7', 'F': 'J'}
-    cornerY = {'7' : 'L', 'F': 'J'}
-
-    # for g in [ground[(2,6)]]:
-    for g in ground.values():
-        crossings = [0,0,0,0]
-        x0 = g.x
-        y0 = g.y
-        x = 0
-        y = y0
-        while 0 <= x < sizeX:
-            num = 0 if x < x0 else 1
-            if (x, y) in loop and loop[(x, y)].symbol in corners:
-                sym = loop[(x, y)].symbol
-                
-                x += 1
-                while (x, y) in loop:
-                    if loop[(x, y)].symbol in corners:
-                        if sym in cornerX and loop[(x, y)].symbol == cornerX[sym]:
-                            crossings[num] += 1
-                        break
-                    x += 1
-
-            if (x, y) in loop and loop[(x, y)].symbol in ['|']:
-                crossings[num] += 1
-            x += 1
-        x = x0
-        y = 0
-        while 0 <= y < sizeY:
-            num = 2 if y < y0 else 3
-            if (x, y) in loop and loop[(x, y)].symbol in corners:
-                sym = loop[(x, y)].symbol
-                
-                y += 1
-                while (x, y) in loop:
-                    if loop[(x, y)].symbol in corners:
-                        if sym in cornerY and loop[(x, y)].symbol == cornerY[sym]:
-                            crossings[num] += 1
-                        break
-                    y += 1
-            elif (x, y) in loop and loop[(x, y)].symbol in ['-']:
-                crossings[num] += 1
-            y += 1
-        g.inside = all([x % 2 == 1 for x in crossings]) 
-        
-    
-    return len([x for x in ground.values() if x.inside == True]) 
-
+   
 
 
 
