@@ -62,75 +62,42 @@ def day_():
 def format_data(raw):
     return[(x.split(' ')[0], list(map(int, x.split(' ')[1].split(',')))) for x in raw.split('\n')]
 
-is_hash = re.compile(r'#+')
-
-def is_valid(springs, nums):
-    matches = re.findall(is_hash, springs)
-    corrLens = 0
-    if len(matches) != len(nums):
-        return False
-
-    corrLens = len([])
-
-    for i, m in enumerate(matches):
-        if len(m) != nums[i]:
-            return False
-        corrLens += 1
-    return corrLens == len(nums)
-
 def star1(data):
-    
     arr = 0
     for (s, n) in data:
         arr += count_replacements(s, n)
     return arr 
-
-
-
-
-                
-   
 
 def count_replacements(springs, nums):
 
     @functools.cache
     def dp(pos, groupNum, r=0):
         if pos >= len(springs): return groupNum == len(nums)
-        if groupNum >= len(nums): return False
 
         # pos is a . or we replace a ? with a .
         if springs[pos] in '.?': r += dp(pos+1, groupNum)
         
-        if pos == 6:
-            print()
-            print("pos", pos, "groupNum", groupNum, "r", r, "nums[groupNum]", nums[groupNum],  "springs", springs, "len(springs)", len(springs), "pos+nums[groupNum]", pos+nums[groupNum])
-            print()
-            print()
-
-        # print("pos", pos, "groupNum", groupNum, "r", r, "nums[groupNum]", nums[groupNum],  "springs", springs, "len(springs)", len(springs), "pos+nums[groupNum]", pos+nums[groupNum])
         # pos is a # or we replace a ? with a #
-        if  springs[pos] in '#?' \
+        if  springs[pos] in '#?' and groupNum < len(nums) \
             and pos+nums[groupNum] <= len(springs)\
             and all([springs[pos+i] in '#?' for i in range(1, nums[groupNum])]) \
-            and (pos+nums[groupNum] >= len(springs) or springs[pos+nums[groupNum]+1] in '.?'):
+            and (pos+nums[groupNum] == len(springs) or springs[pos+nums[groupNum]] in '.?'):
+            #now we know that we can fit a strip of #'s with length nums[groupNum], starting at pos, ending at pos+nums[groupNum]
 
-            print("pos", pos, "groupNum", groupNum, "r", r, "nums[groupNum]", nums[groupNum],  "springs", springs, "len(springs)", len(springs), "pos+nums[groupNum]", pos+nums[groupNum])
-            nr = dp(pos+nums[groupNum]+1, groupNum+1)
-            print("nr", nr, "r", r)
-            r += nr
-            # r += dp(pos+1, groupNum)
+            #add the ammount of valid arrangements with pos:pos+nums[groupNums] as damaged pipes
+            r += dp(pos+nums[groupNum]+1, groupNum+1)
 
-        # print("springs", springs, "r", r, "pos", pos)
         return r
-    res = dp(0, 0)
-    # print("springs[10]", springs[10:])
-    return res
+    return dp(0,0)
 
 def star2(data):
     arr = 0
     for (s, n) in data:
+        s = '?'.join([s] * 5)
+        n = n * 5
         arr += count_replacements(s, n)
     return arr 
+
 
 def main():
     import cProfile
