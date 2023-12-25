@@ -179,16 +179,10 @@ def DFS(G, start, end, do_print = False):
     return longets_path
 
 def star1(data):
-    return 0
+    # return 0
     Gs, start, end = data
     G = Gs[0]
     longest = DFS(G, start, end)
-
-    # sorted = [len(p)-1 for p in paths]
-    # sorted.sort()
-    # print(sorted)
-    # longest = max(paths, key=lambda x: len(x))
-
     return longest -1
 
 
