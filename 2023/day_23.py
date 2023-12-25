@@ -8,6 +8,7 @@ from aocd import submit
 from aocd.models import Puzzle
 import itertools
 import functools
+import networkx as nx
 
 def day_():
     year = int(os.getcwd().split('\\')[-1][-4:]) 
@@ -79,6 +80,8 @@ def format_data(raw):
     end_y = len(lines) - 1
     G = defaultdict(list)
     G2 = defaultdict(list)
+    nodes = set()
+    edges = set()
     slopes = set()
     slopes.add((start_x, start_y))
     slopes.add((end_x, end_y))
@@ -99,34 +102,55 @@ def format_data(raw):
                 if inside(nx, ny, lines) and lines[ny][nx] != "#":
                     G[(x, y)].append((nx, ny))
             if tile != "#":
+                nodes.add(((x, y)))
                 for dx, dy in dirs:
                     nx, ny = x + dx, y + dy
                     if inside(nx, ny, lines) and lines[ny][nx] != "#":
-                        G2[(x, y)].append((nx, ny))
+                        edges.add(((x, y), (nx, ny)))
+                # for dx, dy in dirs:
+                #     nx, ny = x + dx, y + dy
+                #     if inside(nx, ny, lines) and lines[ny][nx] != "#":
+                #         G2[(x, y)].append((nx, ny))
     
-    return (G, G2), (start_x, start_y), (end_x, end_y)
+    # return (G, (nodes, edges)), (start_x, start_y), (end_x, end_y)
 
-    G2 = defaultdict(list)
     start = (start_x, start_y)
     end = (end_x, end_y)
-    slopes.add(start)
-    slopes.add(end)
-    #create G2 where each edge is a slope (including start and end), and nodes are the "roads" between them
-    for slope in slopes:
-        x, y = slope
-        ch = lines[y][x]
-        dir = tile_to_dir[ch]
-        nx, ny = x + dir[0], y + dir[1]
-        stack = [(nx, ny, 1)]
+    neighbours = defaultdict(set)
+    intersections = set([start, end])
+    graph = defaultdict(list)
 
-
+    for y in range(len(lines)):
+        for x in range(len(lines[y])):
+            tile = lines[y][x]
+            if tile == '#':
+                continue
+            ec = 0
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if not inside(nx, ny, lines) or lines[ny][nx] == "#":
+                    continue
+                ec += 1
+                neighbours[(x, y)].add((nx, ny))
+            if ec >= 3:
+                intersections.add((x, y))
+    for i in intersections:
+        for j in neighbours[i]:
+            (t, d) = intersect_dist(j, 1, set([i]), intersections, neighbours)
+            graph[i].append((t, d))
     
-               
+                
 
-            
-
-    return (G, G2), (start_x, start_y), (end_x, end_y)
+    return (G, graph), (start_x, start_y), (end_x, end_y)
     return raw
+
+def intersect_dist(curr, dist, seen, intersections, neighbours):
+    if curr in intersections:
+        return (curr, dist)
+    
+    n = [p for p in neighbours[curr] if p not in seen][0]
+    return intersect_dist(n, dist + 1, seen.union([curr]), intersections, neighbours)
+
     
 def DFS(G, start, end, do_print = False):
     # paths = []
@@ -155,16 +179,28 @@ def DFS(G, start, end, do_print = False):
     return longets_path
 
 def star1(data):
-    # return 0
+    return 0
     Gs, start, end = data
     G = Gs[0]
     longest = DFS(G, start, end)
+
     # sorted = [len(p)-1 for p in paths]
     # sorted.sort()
     # print(sorted)
     # longest = max(paths, key=lambda x: len(x))
 
     return longest -1
+
+
+
+def bfs_stolen(G, node, end, score, seen):
+    if node == end:
+        yield score
+
+    for p, dist in G[node]:
+        if p in seen:
+            continue
+        yield from bfs_stolen(G, p, end, score + dist, seen | {node})
 
 
 
@@ -172,49 +208,9 @@ def star2(data):
     # return 0
     print("star2")
     Gs, start, end = data
-    G = Gs[1]
-    longest = DFS(G, start, end)
-    # longest = max(paths, key=lambda x: len(x))
-    return longest -1
+    return max(bfs_stolen(Gs[1], start, end, 0, set([start])))
 
-    Gs, start, end = data
-    G = Gs[1][0]
     
-    paths = DFS(G, start , end, True)
-
-    print(start)
-    print(start, Gs[1][1][start])
-    
-
-    # for g in Gs[1][1]:
-    #     print(g, Gs[1][1][g])
-
-
-    # sorted = [len(p)-1 for p in paths]
-    # sorted.sort()
-    # print(sorted)
-    longest = max(paths, key=lambda x: len(x))
-    # print("longest", longest)
-    for g in longest:
-        print(g, Gs[1][1][g])
-        (x, y) = g
-        print(Gs[1][2][y][x])
-
-    g_len = Gs[1][1]
-    length = 0
-    for i in range(len(longest) - 1):
-        curr = longest[i]
-        next = longest[i+1]
-        for nx, ny, l in g_len[curr]:
-            if (nx, ny) == next:
-                length += l
-                break
-
-
-
-    return length
-    
-
 
 def main():
     import cProfile
