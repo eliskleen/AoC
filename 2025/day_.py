@@ -47,12 +47,13 @@ def day_():
     if submit_b:
         print("Submitting star 2")
         puzzle.answer_b = ans2
-    if 1:
-        print(f'Load time: {load_time}')
-        print(f'Star 1 time: {star1_time}')
-        print(f'Star 2 time: {star2_time}')
-        print(f'Star 1 answer: {ans1}')
-        print(f'Star 2 answer: {ans2}')
+
+    print(f'Load time: {load_time}')
+    print(f'Star 1 time: {star1_time}')
+    print(f'Star 2 time: {star2_time}')
+    print(f"Total time: {load_time + star1_time + star2_time}")
+    print(f'Star 1 answer: {ans1}')
+    print(f'Star 2 answer: {ans2}')
 
 
 def format_data(raw):
