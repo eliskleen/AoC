@@ -49,21 +49,16 @@ def day_():
     if submit_b:
         print("Submitting star 2")
         puzzle.answer_b = ans2
-    if 1:
-        print(f'Load time: {load_time}')
-        print(f'Star 1 time: {star1_time}')
-        print(f'Star 2 time: {star2_time}')
-        print(f'Star 1 answer: {ans1}')
-        print(f'Star 2 answer: {ans2}')
+    print(f'Load time: {load_time}')
+    print(f'Star 1 time: {star1_time}')
+    print(f'Star 2 time: {star2_time}')
+    print(f"Total time: {load_time + star1_time + star2_time}")
+    print(f'Star 1 answer: {ans1}')
+    print(f'Star 2 answer: {ans2}')
 
 
 def format_data(raw):
-    return [[int(c) for c in row.split(",")] for row in raw.splitlines()]
-    
-def dist(a, b):
-    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2] - b[2])**2)
-
-def makeConnections(data, numConnections, returnLast = False):
+    data = [[int(c) for c in row.split(",")] for row in raw.splitlines()]
     #find all distances
     distances = defaultdict(int)
     seen = set()
@@ -76,6 +71,13 @@ def makeConnections(data, numConnections, returnLast = False):
 
     distances = [(d, pair) for pair, d in distances.items()]
     distances.sort()
+    return data, distances
+
+    
+def dist(a, b):
+    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2] - b[2])**2)
+
+def makeConnections(distances, numConnections, returnLast = False):
     cNum = 0
     #map from circuit number to indecies
     circuits = defaultdict(list)
@@ -87,6 +89,7 @@ def makeConnections(data, numConnections, returnLast = False):
     for d, (i, j) in distances:
         ci = cMap[i]
         cj = cMap[j]
+        #i and j is not in a circuit
         if(ci == 0 and cj == 0):
             cNum += 1
             cMap[i] = cNum
@@ -94,11 +97,12 @@ def makeConnections(data, numConnections, returnLast = False):
             circuits[cNum].append(i)
             circuits[cNum].append(j)
             last = (i, j)
-
+        #j his not in a circuit
         elif ci != 0 and cj == 0:
             cMap[j] = cMap[i]
             circuits[ci].append(j)
             last = (i, j)
+        #i is not in a circuit
         elif cj != 0 and ci == 0:
             cMap[i] = cMap[j]
             circuits[cj].append(i)
@@ -118,10 +122,11 @@ def makeConnections(data, numConnections, returnLast = False):
     return circSizes[0] * circSizes[1] * circSizes[2]
 
 def star1(data):
-    return makeConnections(data, 1000)
+    return makeConnections(data[1], 1000)
 
 def star2(data):
-    i, j = makeConnections(data, -1, True)
+    data, distances = data
+    i, j = makeConnections(distances, -1, True)
     return data[i][0] * data[j][0]
 
 def main():
